@@ -11,10 +11,13 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useSession } from "@/lib/auth-client";
 import Link from "next/link";
 import { Home, Table2, Settings, LogOut } from "lucide-react";
-import { logOutAction } from "@/server/actions";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export function UserAvatar() {
   const { data: session, isPending } = useSession();
+  const router = useRouter();
+
 
   if (isPending) return <div>…</div>;
   if (!session?.user) return null;
@@ -31,7 +34,8 @@ export function UserAvatar() {
     : session.user.email.slice(0, 2).toUpperCase();
 
   const logOut = async () => {
-    logOutAction();
+    await authClient.signOut();
+    router.push("/"); // o router.refresh() si prefieres
   };
 
   return (
