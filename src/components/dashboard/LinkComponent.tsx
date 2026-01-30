@@ -1,6 +1,6 @@
 "use client";
 import ExternalLink from "next/link";
-import { type Link } from "@prisma/client";
+import { type Link } from "../../../prisma/generated/client";
 import { ClickIcon } from "../icons/ClickIcon";
 import { DeleteLinkButton } from "./DeleteLinkButton";
 import { CopyLinkButton } from "./CopyLinkButton";

@@ -1,7 +1,7 @@
 "use client";
 
 import { SettingsIcon } from "../icons/SettingsIcons";
-import { Link } from "@prisma/client";
+import { Link } from "../../../prisma/generated/client";
 import { Input } from "../ui/input";
 import {
   InputGroup,

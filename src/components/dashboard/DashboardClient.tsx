@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { Link } from "@prisma/client";
+import type { Link } from "../../../prisma/generated/client";
 import { LinkComponent } from "@/components/dashboard/LinkComponent";
 import {
   LinkToolbar,

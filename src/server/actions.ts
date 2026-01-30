@@ -14,7 +14,7 @@ import {
 } from "./db";
 
 import { generateUniqueShortCode, isShortCodeTaken } from "./utils";
-import { Link } from "@prisma/client";
+import { Link } from "../../prisma/generated/client";
 
 type FormState = {
   errors?: {

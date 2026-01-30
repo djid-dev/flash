@@ -1,19 +1,28 @@
-import { PrismaClient } from "@prisma/client";
+import "dotenv/config";
+import { PrismaClient } from "../../prisma/generated/client";
+import { withAccelerate } from "@prisma/extension-accelerate";
+import { PrismaPg } from "@prisma/adapter-pg";
+import pg from "pg";
 
-export const prisma = new PrismaClient();
+const pool = new pg.Pool({ connectionString: process.env.POSTGRES_URL });
+const adapter = new PrismaPg(pool);
 
+export const prisma = new PrismaClient({ adapter }).$extends(withAccelerate());
 
-export async function createLink(destination: string, shortCode:string , userId:string) {
+export async function createLink(
+  destination: string,
+  shortCode: string,
+  userId: string,
+) {
   const link = await prisma.link.create({
-      data: {
-        originalUrl: destination,
-        shortCode: shortCode,
-        userId: userId,
-      },
-    });
-    return link;
+    data: {
+      originalUrl: destination,
+      shortCode: shortCode,
+      userId: userId,
+    },
+  });
+  return link;
 }
-
 
 export async function getLinks(userId: string) {
   const links = await prisma.link.findMany({
@@ -24,9 +33,7 @@ export async function getLinks(userId: string) {
   return links;
 }
 
-export async function getLink(
-  shortCode: string
-) {
+export async function getLink(shortCode: string) {
   const link = await prisma.link.findFirst({
     where: {
       shortCode,
@@ -35,11 +42,10 @@ export async function getLink(
   return link;
 }
 
-
 export async function updateLink(
   linkId: string,
   newUrl: string,
-  newShortCode: string
+  newShortCode: string,
 ) {
   const updatedLink = await prisma.link.update({
     where: {
@@ -75,12 +81,12 @@ export async function updateLinkClicks(shortCode: string) {
 export async function deleteLink(linkShortCode: string) {
   try {
     const deletedLink = await prisma.link.delete({
-      where:{
-        shortCode: linkShortCode
-      }
+      where: {
+        shortCode: linkShortCode,
+      },
     });
-    return deletedLink
+    return deletedLink;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }

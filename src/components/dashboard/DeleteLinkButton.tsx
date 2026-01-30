@@ -1,6 +1,6 @@
 "use client";
 
-import { Link } from "@prisma/client";
+import { Link } from "../../../prisma/generated/client";
 import { TrashIcon } from "../icons/TrashIcon";
 import { deleteLinkAction } from "@/server/actions";
 
