@@ -4,9 +4,11 @@ import { toast } from "sonner";
 
 export function CopyLinkButton({linkInfo}: {linkInfo: Link}) {
   const copyLink = () => {
-    navigator.clipboard.writeText(process.env.NEXT_PUBLIC_BASE_URL + "/" + linkInfo.shortCode);
+    const baseUrl = process.env.VERCEL_URL ?? "http://localhost:3000";
+
+    navigator.clipboard.writeText(baseUrl + "/" + linkInfo.shortCode);
     toast.success("Link copied to clipboard", {
-      description: process.env.NEXT_PUBLIC_BASE_URL + "/" + linkInfo.shortCode,
+      description: baseUrl + "/" + linkInfo.shortCode,
     });
   };
   return (
