@@ -1,32 +1,20 @@
-'use client';
+'use client'
 
-import { useEffect, useState } from "react";
-import { Sun, Moon } from "lucide-react";
+import { useEffect, useState } from 'react'
+import { useTheme } from 'next-themes'
+import { Sun, Moon } from 'lucide-react'
 
 export default function ThemeToggleButton() {
-  const [isDark, setIsDark] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
 
-  // Leer el tema almacenado o el aplicado en el body
-  useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
+  useEffect(() => setMounted(true), [])
 
-    // Si hay tema en localStorage, úsalo. Si no, usa el actual en <body>
-    const isDarkTheme =
-      storedTheme === "dark" ||
-      (!storedTheme && document.documentElement.classList.contains("dark"));
+  const isDark = mounted ? resolvedTheme === 'dark' : true
 
-    setIsDark(isDarkTheme);
-    document.documentElement.classList.toggle("dark", isDarkTheme);
-    window.dispatchEvent(new Event("theme-change"));
-  }, []);
-
-  // Cambiar tema
   const toggleTheme = () => {
-    const newIsDark = !isDark;
-    setIsDark(newIsDark);
-    document.documentElement.classList.toggle("dark", newIsDark);
-    localStorage.setItem("theme", newIsDark ? "dark" : "light");
-  };
+    setTheme(isDark ? 'light' : 'dark')
+  }
 
   return (
     <button
@@ -40,6 +28,5 @@ export default function ThemeToggleButton() {
         <Sun className="w-6 h-6 transition-transform duration-300 rotate-0 group-hover:-rotate-14" />
       )}
     </button>
-  );
+  )
 }
-
