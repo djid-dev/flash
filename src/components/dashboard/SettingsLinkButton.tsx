@@ -1,9 +1,13 @@
 "use client";
 
 import { SettingsIcon } from "../icons/SettingsIcons";
-import { Link } from "../../../generated/prisma/client";
+import { Link } from "@prisma/client";
 import { Input } from "../ui/input";
-import { InputGroup, InputGroupAddon, InputGroupInput} from "../ui/input-group";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "../ui/input-group";
 import {
   Dialog,
   DialogContent,
@@ -19,7 +23,7 @@ import { CircleXIcon } from "lucide-react";
 import { useState, useEffect, useActionState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { updateLinkAction} from "../../server/actions";
+import { updateLinkAction } from "../../server/actions";
 import { ShortCodeChangeAlert } from "./ShortCodeChangeAlert";
 
 export function SettingsLinkButton({ linkInfo }: { linkInfo: Link }) {
@@ -112,9 +116,12 @@ export function SettingsLinkButton({ linkInfo }: { linkInfo: Link }) {
             </label>
             <InputGroup className="flex items-center ml-2 mt-2 ">
               <InputGroupAddon className="py-2">
-                <ShortCodeChangeAlert isLocked={isLocked} setIsLocked={setIsLocked}/>
+                <ShortCodeChangeAlert
+                  isLocked={isLocked}
+                  setIsLocked={setIsLocked}
+                />
               </InputGroupAddon>
-              <InputGroupInput 
+              <InputGroupInput
                 name="short_code"
                 id="newShortCode"
                 defaultValue={linkInfo.shortCode}

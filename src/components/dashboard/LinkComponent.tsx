@@ -1,7 +1,6 @@
-
-'use client';
+"use client";
 import ExternalLink from "next/link";
-import { type Link } from "../../../generated/prisma/client";
+import { type Link } from "@prisma/client";
 import { ClickIcon } from "../icons/ClickIcon";
 import { DeleteLinkButton } from "./DeleteLinkButton";
 import { CopyLinkButton } from "./CopyLinkButton";
@@ -12,12 +11,12 @@ type LinkComponentProps = {
 };
 
 export function LinkComponent({ linkInfo }: LinkComponentProps) {
-
-
   return (
     <li className="flex w-full flex-col gap-2 border-b border-violet-600 px-3 py-2">
       <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <span className="max-w-full truncate dark:text-gray-200 text-gray-800 font-bold">/{linkInfo.shortCode}</span>
+        <span className="max-w-full truncate dark:text-gray-200 text-gray-800 font-bold">
+          /{linkInfo.shortCode}
+        </span>
 
         <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 sm:justify-end">
           <span className="flex items-center gap-x-1 text-sm dark:text-gray-300 text-gray-700">
@@ -25,11 +24,13 @@ export function LinkComponent({ linkInfo }: LinkComponentProps) {
             <ClickIcon width="16px" height="16px" />
           </span>
 
-          <span className="hidden dark:text-gray-400 text-gray-600 sm:inline">|</span>
+          <span className="hidden dark:text-gray-400 text-gray-600 sm:inline">
+            |
+          </span>
 
           <ul className="flex items-center gap-x-1">
             <CopyLinkButton linkInfo={linkInfo} />
-            <SettingsLinkButton linkInfo={linkInfo}/>
+            <SettingsLinkButton linkInfo={linkInfo} />
             <DeleteLinkButton linkInfo={linkInfo} />
           </ul>
         </div>

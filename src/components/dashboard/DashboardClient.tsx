@@ -1,17 +1,20 @@
-'use client';
+"use client";
 
-import { useMemo, useState } from 'react';
-import type { Link } from '../../../generated/prisma/client';
-import { LinkComponent } from '@/components/dashboard/LinkComponent';
-import { LinkToolbar, type LinkSortOption } from '@/components/dashboard/LinksToolbar';
+import { useMemo, useState } from "react";
+import type { Link } from "@prisma/client";
+import { LinkComponent } from "@/components/dashboard/LinkComponent";
+import {
+  LinkToolbar,
+  type LinkSortOption,
+} from "@/components/dashboard/LinksToolbar";
 
 type DashboardClientProps = {
   links: Link[];
 };
 
 export function DashboardClient({ links }: DashboardClientProps) {
-  const [sort, setSort] = useState<LinkSortOption>('newest');
-  const [query, setQuery] = useState('');
+  const [sort, setSort] = useState<LinkSortOption>("newest");
+  const [query, setQuery] = useState("");
 
   const visibleLinks = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -20,28 +23,33 @@ export function DashboardClient({ links }: DashboardClientProps) {
       normalizedQuery.length === 0
         ? links
         : links.filter((l) => {
-            const shortCode = (l.shortCode ?? '').toLowerCase();
-            const originalUrl = (l.originalUrl ?? '').toLowerCase();
-            return shortCode.includes(normalizedQuery) || originalUrl.includes(normalizedQuery);
+            const shortCode = (l.shortCode ?? "").toLowerCase();
+            const originalUrl = (l.originalUrl ?? "").toLowerCase();
+            return (
+              shortCode.includes(normalizedQuery) ||
+              originalUrl.includes(normalizedQuery)
+            );
           });
 
     const next = [...filtered];
 
     switch (sort) {
-      case 'newest':
+      case "newest":
         next.sort(
-          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
         );
         break;
-      case 'oldest':
+      case "oldest":
         next.sort(
-          (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          (a, b) =>
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
         );
         break;
-      case 'az':
+      case "az":
         next.sort((a, b) => a.shortCode.localeCompare(b.shortCode));
         break;
-      case 'clicks':
+      case "clicks":
         next.sort((a, b) => (b.clicks ?? 0) - (a.clicks ?? 0));
         break;
       default:
