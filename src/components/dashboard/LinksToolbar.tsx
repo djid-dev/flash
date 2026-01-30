@@ -2,8 +2,14 @@
 
 import { Button } from "../ui/button";
 import { InputGroup, InputGroupInput, InputGroupAddon } from "../ui/input-group";
-import { Plus, CircleXIcon} from "lucide-react";
+import { Plus, CircleXIcon } from "lucide-react";
 import { toast } from "sonner";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Dialog,
   DialogContent,
@@ -17,10 +23,19 @@ import {
 import { createLinkAction } from "@/server/actions";
 import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search } from "lucide-react";
+import { ArrowUpDown, Search, X } from "lucide-react";
 import { Input } from "../ui/input";
 
-export function LinkToolbar() {
+export type LinkSortOption = "newest" | "oldest" | "az" | "clicks";
+
+type LinkToolbarProps = {
+  query: string;
+  onQueryChange: (next: string) => void;
+  sort: LinkSortOption;
+  onSortChange: (next: LinkSortOption) => void;
+};
+
+export function LinkToolbar({ query, onQueryChange, sort, onSortChange }: LinkToolbarProps) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
@@ -44,30 +59,68 @@ export function LinkToolbar() {
     }
   }, [state.success, router]);
 
+  const sortLabel: Record<LinkSortOption, string> = {
+    newest: "Newest",
+    oldest: "Oldest",
+    az: "A-Z",
+    clicks: "Clicks",
+  };
+
   return (
     <nav className="w-full">
       <div className="flex justify-between items-center gap-4 max-w-[60%] mx-auto mt-4 mb-6">
-        
         <div className="w-[25%]">
           <InputGroup className="border-violet-500   focus-visible:border-violet-500">
             <InputGroupAddon>
               <Search className="text-violet-500" />
             </InputGroupAddon>
             <InputGroupInput
-              placeholder="Search"
+              placeholder="Search by shortcode or URL"
+              value={query}
+              onChange={(e) => onQueryChange(e.target.value)}
             />
+            {query.length > 0 && (
+              <InputGroupAddon
+                align="inline-end"
+                className="cursor-pointer"
+                onClick={() => onQueryChange("")}
+              >
+                <X className="text-violet-500" />
+              </InputGroupAddon>
+            )}
           </InputGroup>
         </div>
-         <Dialog
-           open={open}
-           onOpenChange={(nextOpen) => {
-             setOpen(nextOpen);
-             if (!nextOpen) {
-               const form = document.getElementById("create-link-form") as HTMLFormElement | null;
-               form?.reset();
-             }
-           }}
-         >
+
+        <div className="flex items-center gap-3">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                type="button"
+                variant="outline"
+                className="cursor-pointer border-violet-300 text-violet-700 dark:text-violet-400 dark:hover:bg-neutral-800 dark:hover:text-violet-200 hover:bg-violet-50 hover:text-violet-800"
+              >
+                <ArrowUpDown className="size-4" />
+                Sort: {sortLabel[sort]}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => onSortChange("newest")}>Newest</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onSortChange("oldest")}>Oldest</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onSortChange("az")}>A-Z</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onSortChange("clicks")}>Clicks</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <Dialog
+            open={open}
+            onOpenChange={(nextOpen) => {
+              setOpen(nextOpen);
+              if (!nextOpen) {
+                const form = document.getElementById("create-link-form") as HTMLFormElement | null;
+                form?.reset();
+              }
+            }}
+          >
            <DialogTrigger asChild>
              <Button className="bg-violet-500 text-white hover:bg-violet-400 transition-colors flex items-center gap-2 font-semibold cursor-pointer">
                <Plus className="stroke-2.5 size-6" />
@@ -142,6 +195,7 @@ export function LinkToolbar() {
             </form>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
     </nav>
   );

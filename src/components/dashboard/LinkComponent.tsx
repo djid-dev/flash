@@ -2,11 +2,10 @@
 'use client';
 import ExternalLink from "next/link";
 import { type Link } from "../../../generated/prisma/client";
-import { SettingsIcon } from "../icons/SettingsIcons";
 import { ClickIcon } from "../icons/ClickIcon";
 import { DeleteLinkButton } from "./DeleteLinkButton";
 import { CopyLinkButton } from "./CopyLinkButton";
-
+import { SettingsLinkButton } from "./SettingsLinkButton";
 
 type LinkComponentProps = {
   linkInfo: Link;
@@ -30,9 +29,7 @@ export function LinkComponent({ linkInfo }: LinkComponentProps) {
 
           <ul className="flex items-center gap-x-1">
             <CopyLinkButton linkInfo={linkInfo} />
-            <button className="rounded-md p-1 cursor-pointer text-violet-500 dark:hover:text-violet-200 hover:text-violet-300">
-              <SettingsIcon width="18px" height="18px" />
-            </button>
+            <SettingsLinkButton linkInfo={linkInfo}/>
             <DeleteLinkButton linkInfo={linkInfo} />
           </ul>
         </div>

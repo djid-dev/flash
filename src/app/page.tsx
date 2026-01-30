@@ -1,9 +1,11 @@
+'use client';
 
 import BlurText from "@/components/ui/BlurText";
-import { geist, nunitoSans } from "@/lib/fonts";
+import { geist } from "@/lib/fonts";
 import FadeContent from "@/components/ui/FadeContent";
-import Link from "next/link";
 import { Link2Icon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { redirect } from "next/navigation";
 
 export default function Home() {
   return (
@@ -29,13 +31,15 @@ export default function Home() {
             manage your links. <br /> It`s fast, secure and easy to use.
           </p>
 
-          <Link
-            href={"/dashboard"}
-            className={`${nunitoSans.className} antialiased flex items-center group gap-2 w-fit  my-6 p-3 border-2 border-neutral-300 dark:border-neutral-600    rounded-[.5rem]  hover:border-b-violet-500 dark:hover:border-violet-500 hover:text-foreground dark:text-white font-bold`}
+          <Button
+            onClick={() => redirect("/dashboard")}
+            variant="outline"
+            className="m-5 flex items-center gap-3 rounded-md p-7 text-xl font-bold text-white border-2 border-violet-500 bg-violet-500 dark:hover:text-violet-500 dark:hover:bg-transparent dark:bg-violet-500 hover:text-violet-500 dark:hover:border-violet-500  hover:bg-transparent  [&_svg]:!size-8 transition group"
           >
-            <Link2Icon className="rotate-135 group-hover:rotate-105 transition-transform duration-300 ease-in-out group-hover:text-violet-500" />
-            <span>Create a link</span>
-          </Link>
+            <Link2Icon className="group-hover:-rotate-10 transition" />
+            Get started
+          </Button>
+
         </FadeContent>
       </div>
     </section>

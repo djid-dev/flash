@@ -25,11 +25,11 @@ export async function getLinks(userId: string) {
 }
 
 export async function getLink(
-  linkId: string
+  shortCode: string
 ) {
-  const link = await prisma.user.findFirst({
+  const link = await prisma.link.findFirst({
     where: {
-      id: linkId,
+      shortCode,
     },
   });
   return link;
@@ -52,6 +52,24 @@ export async function updateLink(
   });
 
   return updatedLink;
+}
+
+export async function updateLinkClicks(shortCode: string) {
+  try {
+    const updatedLink = await prisma.link.update({
+      where: {
+        shortCode,
+      },
+      data: {
+        clicks: {
+          increment: 1,
+        },
+      },
+    });
+    return updatedLink;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function deleteLink(linkShortCode: string) {

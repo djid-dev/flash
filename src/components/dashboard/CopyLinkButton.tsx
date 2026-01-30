@@ -6,9 +6,9 @@ export function CopyLinkButton({linkInfo}: {linkInfo: Link}) {
   const copyLink = () => {
     const baseUrl = process.env.VERCEL_URL ?? "http://localhost:3000";
 
-    navigator.clipboard.writeText(baseUrl + "/" + linkInfo.shortCode);
+    navigator.clipboard.writeText(baseUrl + "/links/" + linkInfo.shortCode);
     toast.success("Link copied to clipboard", {
-      description: baseUrl + "/" + linkInfo.shortCode,
+      description: baseUrl + "/links/" + linkInfo.shortCode,
     });
   };
   return (
