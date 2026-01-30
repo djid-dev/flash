@@ -1,4 +1,4 @@
-import { LinkComponent } from "@/components/dashboard/Link";
+import { LinkComponent } from "@/components/dashboard/LinkComponent";
 import { LinkToolbar } from "@/components/dashboard/LinksToolbar";
 import { getLinks } from "@/server/db";
 import { getUserSessionFromServer } from "@/server/utils";

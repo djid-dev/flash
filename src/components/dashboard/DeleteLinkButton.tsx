@@ -49,7 +49,7 @@ export const DeleteLinkButton = ({linkInfo}: {linkInfo: Link}) => {
             <DialogHeader>
               <DialogTitle>This action cannot be undone.</DialogTitle>
               <DialogDescription>
-                 Write <strong className="text-red-600 bg-neutral-900 p-1 rounded-md ">{linkInfo.shortCode}</strong> to delete the link.
+                 Write <strong className="text-red-600 bg-neutral-100 dark:bg-neutral-800 p-1 rounded-md ">{linkInfo.shortCode}</strong> to delete the link.
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
@@ -63,7 +63,7 @@ export const DeleteLinkButton = ({linkInfo}: {linkInfo: Link}) => {
              <DialogClose asChild>
                 <Button variant="outline">Cancel</Button>
               </DialogClose>    
-              <Button onClick={handleClick} className="bg-red-500 text-white">Delete</Button>
+              <Button onClick={handleClick} className="bg-red-500 hover:bg-red-700 text-white">Delete</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
