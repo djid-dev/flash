@@ -5,10 +5,16 @@ import { authClient } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
 import { ShortLinkSchema } from "@/schemas/shortLinks.schema";
 import { headers } from "next/headers";
-import { createLink, deleteLink, updateLink, getLink, updateLinkClicks } from "./db";
+import {
+  createLink,
+  deleteLink,
+  updateLink,
+  getLink,
+  updateLinkClicks,
+} from "./db";
 
 import { generateUniqueShortCode, isShortCodeTaken } from "./utils";
-import { Link } from "../../generated/prisma/client";
+import { Link } from "@prisma/client";
 
 type FormState = {
   errors?: {
@@ -32,10 +38,15 @@ export async function logOutAction() {
   redirect("/");
 }
 
-const validationLink = async (data: {
-  destination: string;
-  shortCode: string;
-}) => {
+export async function createLinkAction(
+  prevState: FormState,
+  formData: FormData,
+): Promise<FormState> {
+  const data = {
+    destination: formData.get("destination")?.toString() ?? "",
+    shortCode: formData.get("short_link")?.toString() ?? "",
+  };
+
   let parsed = ShortLinkSchema.safeParse(data);
 
   if (!parsed.success) {
@@ -78,31 +89,6 @@ const validationLink = async (data: {
       message: "No tienes acceso",
     };
   }
-
-  return {
-    success: true,
-    link: data,
-    message: null,
-  };
-};
-
-export async function createLinkAction(
-  prevState: FormState,
-  formData: FormData,
-): Promise<FormState> {
-  const data = {
-    destination: formData.get("destination")?.toString() ?? "",
-    shortCode: formData.get("short_link")?.toString() ?? "",
-  };
-
-  const validation = await validationLink(data);
-
-  if (validation.errors) {
-    return validation;
-  }
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
 
   const userId = session!.user.id;
 
@@ -172,8 +158,6 @@ export async function updateLinkAction(
 
   const previousShortCode = prevState.link?.shortCode ?? "";
 
-  // En este form los campos se envian por `name`, no por `id`
-  // Ojo: `short_code` puede NO venir si el input esta `disabled`.
   const submittedShortCode = formData.get("short_code")?.toString();
   const data = {
     destination: formData.get("destination")?.toString() ?? "",
