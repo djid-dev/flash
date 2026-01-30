@@ -16,25 +16,24 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
 
   return (
-    <Card className="max-w-md w-7xl p-3 border-red-400 dark:border-red-900 py-6  bg-background">
+    <Card className="max-w-md w-7xl gap-10 p-3 border-2 border-violet-400 dark:border-violet-500 py-6  bg-background">
       <CardHeader>
-        <CardTitle className="text-lg md:text-2xl">Log In to Flash</CardTitle>
+        <CardTitle className="text-lg md:text-4xl">Log In to Flash</CardTitle>
         <CardDescription className="text-xs md:text-sm">
           Use your favorite social provider to get started:
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="grid gap-4">
+      <CardContent className="gap-4">
           <div
             className={cn(
-              "w-full gap-2 flex items-center",
+              "w-full gap-4 flex items-center",
               "justify-between flex-col"
             )}
           >
             <Button
               variant="outline"
               className={cn(
-                "w-full gap-2 cursor-pointer border-red-400 dark:border-red-900 bg-background"
+                "w-full gap-4 cursor-pointer border-2 border-violet-400 dark:border-violet-500 bg-background"
               )}
               disabled={loading}
               onClick={async () => {
@@ -55,7 +54,6 @@ export default function SignIn() {
               }}
             >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
                 width="0.98em"
                 height="1em"
                 viewBox="0 0 256 262"
@@ -82,7 +80,7 @@ export default function SignIn() {
             <Button
               variant="outline"
               className={cn(
-                "w-full gap-2 cursor-pointer border-red-400 dark:border-red-900 bg-background"
+                "w-full gap-4 cursor-pointer border-2 border-violet-400 dark:border-violet-500 bg-background"
               )}
               disabled={loading}
               onClick={async () => {
@@ -96,15 +94,14 @@ export default function SignIn() {
                       setLoading(true);
                     },
                     onResponse: (ctx) => {
-                      setLoading(false);
+                      setLoading(false); 
                     },
                   }
                 );
               }}
             >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="1em"
+                width="0.98em"
                 height="1em"
                 viewBox="0 0 24 24"
               >
@@ -116,7 +113,6 @@ export default function SignIn() {
               Sign in with Github
             </Button>
           </div>
-        </div>
       </CardContent>
     </Card>
   );

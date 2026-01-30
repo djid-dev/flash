@@ -54,11 +54,11 @@ export async function updateLink(
   return updatedLink;
 }
 
-export async function deleteLink(linkId: string) {
+export async function deleteLink(linkShortCode: string) {
   try {
     const deletedLink = await prisma.link.delete({
       where:{
-        id: linkId
+        shortCode: linkShortCode
       }
     });
     return deletedLink

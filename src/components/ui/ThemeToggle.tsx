@@ -13,17 +13,18 @@ export default function ThemeToggleButton() {
     // Si hay tema en localStorage, úsalo. Si no, usa el actual en <body>
     const isDarkTheme =
       storedTheme === "dark" ||
-      (!storedTheme && document.body.classList.contains("dark"));
+      (!storedTheme && document.documentElement.classList.contains("dark"));
 
     setIsDark(isDarkTheme);
-    document.body.classList.toggle("dark", isDarkTheme);
+    document.documentElement.classList.toggle("dark", isDarkTheme);
+    window.dispatchEvent(new Event("theme-change"));
   }, []);
 
   // Cambiar tema
   const toggleTheme = () => {
     const newIsDark = !isDark;
     setIsDark(newIsDark);
-    document.body.classList.toggle("dark", newIsDark);
+    document.documentElement.classList.toggle("dark", newIsDark);
     localStorage.setItem("theme", newIsDark ? "dark" : "light");
   };
 

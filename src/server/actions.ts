@@ -5,7 +5,8 @@ import { authClient } from "@/lib/auth-client";
 import { redirect } from "next/navigation";
 import { ShortLinkSchema } from "@/schemas/shortLinks.schema";
 import { headers } from "next/headers";
-import { createLink } from "./db";
+import { createLink, deleteLink } from "./db";
+
 import { generateUniqueShortCode, isShortCodeTaken } from "./utils";
 
 type FormState = {
@@ -101,4 +102,10 @@ export async function createLinkAction(
       message: "No se pudo crear el link: Error desconocido",
     };
   }
+}
+
+
+export async function deleteLinkAction(shortCode: string) {
+  await deleteLink(shortCode);
+  
 }

@@ -24,15 +24,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${nunitoSans.variable} font-nunito-sans  antialiased dark`}
-      >
+    <html lang="en" className="dark">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+             __html: `(() => {
+  try {
+    const theme = localStorage.getItem('theme');
+    const isDark = theme === 'dark';
+    document.documentElement.classList.toggle('dark', isDark);
+  } catch (_) {}
+})();`,
+
+          }}
+        />
+      </head>
+      <body className={`${nunitoSans.variable} font-nunito-sans antialiased`}>
         <Header />
         {children}
-        <Footer/>
-
+        <Footer />
       </body>
     </html>
   );
+
 }

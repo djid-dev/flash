@@ -14,7 +14,7 @@ export default function Header() {
 
 
   return (
-    <header className="bg-linear-to-r pb-[1.5px] from-transparent min-w-screen via-[color:#E42020] via-50% to-transparent ">
+    <header className="bg-linear-to-r pb-[1.5px] from-transparent min-w-screen via-violet-500 via-50% to-transparent ">
       <div className=" px-2 py-3  flex justify-center items-center  bg-background ">
         <div className=" flex flex-row  justify-between  min-w-[60%] text-lg font-bold">
           <Link href="/" className="flex items-center gap-2 justify-center">
