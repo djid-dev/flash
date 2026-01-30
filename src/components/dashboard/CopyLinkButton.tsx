@@ -1,5 +1,5 @@
 import { CopyIcon } from "lucide-react";
-import { type Link } from "../../../generated/prisma/client";
+import { type Link } from "@prisma/client";
 import { toast } from "sonner";
 
 export function CopyLinkButton({linkInfo}: {linkInfo: Link}) {
